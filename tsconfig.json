@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "ES2018",
     "module": "commonjs",
     "lib": [
       "es2018"
     ],
+    "paths": {
+      "/opt/nodejs/modules": ["lib/layers/modules/nodejs"],
+    },
     "declaration": true,
     "strict": true,
     "noImplicitAny": true,
@@ -21,7 +25,7 @@
     "strictPropertyInitialization": false,
     "typeRoots": [
       "./node_modules/@types"
-    ]
+    ],
   },
   "exclude": [
     "node_modules",
