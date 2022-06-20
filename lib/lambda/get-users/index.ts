@@ -1,14 +1,16 @@
 
 import { dynamoDB } from 'lib/dynamodb';
-import { ScanCommand } from '/opt/nodejs/modules';
+import { ScanCommand, unmarshall } from '/opt/nodejs/modules';
 
 exports.handler = async function(event: any) {
 
-  const response = await dynamoDB.send(new ScanCommand({ TableName: 'BillingAppStack-Users0A0EEA89-UZEXQBZK1CSW' }));
-  console.log('🚀 -> response.Items', response.Items);
+  const response = await dynamoDB.send(new ScanCommand({ TableName: process.env.TABLE_NAME }));
 
   return {
     statusCode: 200,
-    body: JSON.stringify((response.Items ?? []))
+    body: JSON.stringify({
+      niceUsers: (response.Items?.map(item => unmarshall(item)) ?? []),
+      originalUsers: response.Items ?? [],
+    })
   }
 }
